@@ -1,8 +1,5 @@
 body {
   font-family: 'Roboto', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   background: linear-gradient(-45deg, #ee7752, #ee4646, #23a6d5, #23d59a);
   background-size: 400% 400%;
