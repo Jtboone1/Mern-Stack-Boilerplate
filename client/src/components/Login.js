@@ -10,9 +10,9 @@ const useStyles = makeStyles({
     }
 })
 
-const Home = () => {
-  const [roomCode, setRoomCode] = useState("")
-  const [name, setName] = useState("")
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const classes = useStyles();
 
   return (
@@ -27,31 +27,23 @@ const Home = () => {
               padding: "15px",
             }}
           >
-            <h1 style={{ textAlign: "center" }}>Welcome</h1>
+            <h3 style={{ textAlign: "center" }}>Login</h3>
             <TextField
-              label="Enter Room Code"
-              value={roomCode}
-              onChange={(e) => setRoomCode(e.target.value)}
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               style={{marginBottom: 12}}
             />
             <TextField
-              label="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               color="primary"
               style={{ marginTop: 10, outline: "none" }}
             >
-              Join Room
-            </Button>
-            <Button
-              color="secondary"
-              style={{ marginTop: 50, outline: "none" }}
-            >
-              <Link to="/room" style={{color: "red"}}>
-                Create New Room
-              </Link>
+              Login
             </Button>
           </div>
         </CardContent>
@@ -70,4 +62,5 @@ const cardStyle = {
     marginLeft: "-250px" 
 }
 
-export default Home;
+
+export default Login;

@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react"
-import io from 'socket.io-client';
-import { Card, CardContent, makeStyles, Button, TextField } from '@material-ui/core';
 import RaveNav from "./components/RaveNav";
 import Home from "./components/Home";
+import Room from "./components/Room";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 const App = () => {
@@ -17,9 +16,10 @@ const App = () => {
       <Router>
       <RaveNav />
       <Switch>
-        <Route path="/">
-          <Home />
-        </Route>
+        <Route exact path="/" component={Home}/>
+        <Route path="/room" component={Room}/>
+        <Route path="/register" component={Register}/>
+        <Route path="/login" component={Login}/>
       </Switch>
       </Router>
     </>

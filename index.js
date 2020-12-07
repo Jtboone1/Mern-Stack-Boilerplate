@@ -1,12 +1,16 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+const mongoose = require('mongoose');
+require('dotenv/config');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-
+mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(console.log("MongoDB Connected..."))
+    .catch(err => console.log(err));
 
 io.on('connection', (socket) => {
     console.log("Connected!");
@@ -16,26 +20,14 @@ io.on('connection', (socket) => {
     }) 
 
     socket.on('joinRoom', (room) => {
-        console.log(room)
         socket.join(room);
-        console.log(socket.rooms)
-     });
+        console.log(socket.rooms);
+    });
 
-    socket.on('testMessage', (room) => {
-       io.in(room).emit('final');
-       console.log(socket.rooms);
+    socket.on('sendMessage', (message) => {
+        io.in('test').emit("recieveMessage", message);
     })
-
-    
-
 })
-
-
-
-app.get('/', (req, res) => {
-    res.send('<h1>Hello from Server</h1>')
-})
-
 
 const PORT = process.env.PORT || 5000;
 
