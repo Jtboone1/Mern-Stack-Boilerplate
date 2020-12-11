@@ -27,7 +27,7 @@ const Home = () => {
               padding: "15px",
             }}
           >
-            <h1 style={{ textAlign: "center" }}>Welcome</h1>
+            <h3 style={{ textAlign: "center" }}>Welcome</h3>
             <TextField
               label="Enter Room Code"
               value={roomCode}

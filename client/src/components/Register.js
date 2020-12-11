@@ -9,6 +9,8 @@ const useStyles = makeStyles({
     }
 })
 
+
+
 const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -16,6 +18,22 @@ const Register = () => {
     const [password2, setPassword2] = useState("");
     
     const classes = useStyles();
+
+    const registerAccount = async () => {
+      const response = await fetch("/users/register", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          password2
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      console.log(response.json());
+    }
   
     return (
       <div style={cardStyle}>
@@ -60,8 +78,9 @@ const Register = () => {
               <Button
                 color="primary"
                 style={{ marginTop: 10, outline: "none" }}
+                onClick={registerAccount}
               >
-                Login
+                Register
               </Button>
             </div>
           </CardContent>
