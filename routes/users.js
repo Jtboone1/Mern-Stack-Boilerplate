@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 // User Model
 const User = require('../models/User');
@@ -67,10 +68,31 @@ router.post('/register', (req, res) => {
 
 // Login Handle
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local'),
-    () => {
-        console.log("Success Login!")
-    };
+    passport.authenticate('local', {session: false},
+    (err, user, info) => {
+        if (err) {
+            return res.status(400).json({
+                message: err
+            });
+        }
+        if (!user) {
+            return res.status(400).json({
+                message: "No user registered with this email."
+            })
+        }
+
+        req.logIn(user, {session: false}, err => {
+            if (err) {
+                res.send(err);
+            }
+        const userProfile = { 
+            user: user.name,
+            email: user.email
+        }
+        const token = jwt.sign({userProfile}, 'secret', {expiresIn: "1h"});
+        return res.json({userProfile, token});
+      })
+    })(req, res, next)
 })
 
 // Logout Handle

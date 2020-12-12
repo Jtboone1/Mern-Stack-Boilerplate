@@ -3,7 +3,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const session = require('express-session');
+const path = require('path');
 const cors = require('cors');
 require('dotenv/config');
 
@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-require('./config/passport')(passport)
+require('./config/passport')
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(console.log("MongoDB Connected..."))
@@ -39,18 +39,20 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-// Express Session
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}))
-
 // Passport Middleware
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/users', require('./routes/users'));
+app.use('/profile', passport.authenticate('jwt', {session: false}), require('./routes/profile'));
+
+// Serve Static Assets if were in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 const PORT = process.env.PORT || 5000;
 

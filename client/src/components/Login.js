@@ -14,6 +14,22 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const classes = useStyles();
 
+  const loginAccount = async () => {
+    const response = await fetch("/users/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    const jsonResponse = await response.json()
+    console.log(jsonResponse);
+    localStorage.setItem('token', jsonResponse.token)
+  }
+
   return (
     <div style={cardStyle}>
       <Card className={classes.root}>
@@ -35,12 +51,14 @@ const Login = () => {
             />
             <TextField
               label="Password"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               color="primary"
               style={{ marginTop: 10, outline: "none" }}
+              onClick={loginAccount}
             >
               Login
             </Button>

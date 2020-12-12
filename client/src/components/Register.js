@@ -32,7 +32,8 @@ const Register = () => {
           'Content-Type': 'application/json'
         },
       })
-      console.log(response.json());
+      const jsonResponse = await response.json()
+      console.log(jsonResponse);
     }
   
     return (
