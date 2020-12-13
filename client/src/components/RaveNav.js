@@ -1,7 +1,14 @@
-import { Navbar, Button, Form, Nav } from "react-bootstrap/"
+import { useEffect } from "react"
+
+import { Navbar, Nav } from "react-bootstrap/"
 import { Link } from "react-router-dom";
 
 const RaveNav = () => {
+    useEffect(() => {
+
+    }, [])
+
+
     return (
       <Navbar bg="light" fixed="top" style={{height: "60px"}}>
         <Navbar.Brand style={{marginLeft: "20%", height: "50px", width: "auto"}}>

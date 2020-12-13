@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-
 import { Card, CardContent, makeStyles} from '@material-ui/core';
+import  jwt_decode  from "jwt-decode"
 
 const useStyles = makeStyles({
     root: {
@@ -13,21 +13,8 @@ const Profile = () => {
   const [profileName, setProfileName] = useState("");
   const classes = useStyles();
 
-  const getProfile = async () => {
-      console.log(localStorage.getItem('token'))
-      const response = await fetch("/profile", {
-          method: "GET",
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-          
-      })
-      const jsonResponse = await response.json()
-      setProfileName(jsonResponse.user)
-  } 
-
   useEffect(() => {
-      getProfile();
+    setProfileName(jwt_decode(localStorage.getItem("token")).userProfile.name)
   }, [])
 
   return (

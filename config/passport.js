@@ -1,6 +1,5 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const passportJWT = require("passport-jwt");
 const JWTStrategy  = passportJWT.Strategy;
@@ -15,18 +14,18 @@ passport.use(
         User.findOne({email: email})
             .then(user => {
                 if (!user) {
-                    return done(null, false, {message: 'That email is not registered'});
+                    return done(null, false, {message: 'That email is not registered.'});
                 }
                 // Match Password
                 bcrypt.compare(password, user.password, (err, isMatch) => {
                     if (err) {
-                        return done(null, false, {message: "Password Invalid"})
+                        return done(null, false, {message: "Something went wrong. Please try again later."})
                     }
                     if (isMatch) {
                         return done(null, user);
                     }
                     else {
-                        return done(null, false, {message: "Password is incorrect"});
+                        return done(null, false, {message: "Password is incorrect."});
                     }
                 });
             })
@@ -39,13 +38,8 @@ passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey   : 'secret'
     },
-    
     (jwtPayload, done) => {
-        console.log(jwtPayload)
-        if (!jwtPayload.userProfile) {
-            return done(null, false, {message: "No user in Token"})
-        }
-        return done(null, jwtPayload.userProfile)
+        return done(null, jwtPayload)
     }
 ));
 

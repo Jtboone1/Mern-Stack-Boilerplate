@@ -68,36 +68,31 @@ router.post('/register', (req, res) => {
 
 // Login Handle
 router.post('/login', (req, res, next) => {
+    // Passport checks if login information is correct
     passport.authenticate('local', {session: false},
+
+    // Here we define what to do with the done() function in passport.
     (err, user, info) => {
-        if (err) {
-            return res.status(400).json({
-                message: err
+        if (err || !user) {
+            // Send message defined in Local passport strategy when their is a failure.
+            return res.status(401).json({
+                message: info.message
             });
         }
-        if (!user) {
-            return res.status(400).json({
-                message: "No user registered with this email."
-            })
-        }
 
+        // Othersie
         req.logIn(user, {session: false}, err => {
             if (err) {
-                res.send(err);
+                return res.send(err);
             }
-        const userProfile = { 
-            user: user.name,
-            email: user.email
-        }
-        const token = jwt.sign({userProfile}, 'secret', {expiresIn: "1h"});
-        return res.json({userProfile, token});
-      })
+            const userProfile = { 
+                name: user.name,
+                email: user.email
+            }
+            const token = jwt.sign({userProfile}, 'secret', {expiresIn: "1h"});
+            return res.json({userProfile, token});
+        })
     })(req, res, next)
-})
-
-// Logout Handle
-router.get('/logout', (req, res) => {
-    req.logOut();
 })
 
 module.exports = router;

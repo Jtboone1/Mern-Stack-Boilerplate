@@ -4,6 +4,7 @@ import Room from "./components/Room";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
+import AuthRoute from "./components/AuthRoute";
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,15 +16,17 @@ const App = () => {
   return (
     <>
       <Router>
-      <RaveNav />
-      <Switch>
-        <Route exact path="/" component={Home}/>
-        <Route path="/room" component={Room}/>
-        <Route path="/register" component={Register}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/Profile" component={Profile}/>
-      </Switch>
-      </Router>
+        <RaveNav />
+        <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route path="/room" component={Room}/>
+          <Route path="/register" component={Register}/>
+          <Route path="/login" component={Login}/>
+          <AuthRoute>
+            <Route path="/profile" component={Profile}/>
+          </AuthRoute>
+        </Switch>
+        </Router>
     </>
   );
 }

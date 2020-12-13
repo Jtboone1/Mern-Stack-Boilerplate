@@ -43,7 +43,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(passport.initialize());
 
 app.use('/users', require('./routes/users'));
-app.use('/profile', passport.authenticate('jwt', {session: false}), require('./routes/profile'));
+app.use('/profile', require('./routes/profile'));
 
 // Serve Static Assets if were in production
 if (process.env.NODE_ENV === 'production') {
