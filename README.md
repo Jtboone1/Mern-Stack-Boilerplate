@@ -1,2 +1,1 @@
-This is a Read Me.
-Testing Change
+Trying to create a realtime music player with the spotify API
