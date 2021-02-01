@@ -1,1 +1,1 @@
-Trying to create a realtime music player with the spotify API
+Just trying to work with different web technologies in sort of a mock full stack application. Tried to implement boilerplate for a full MERN (MongoDB Express React Node) example. This app actually do anything.
