@@ -1,1 +1,1 @@
-Just trying to work with different web technologies in sort of a mock full stack application. Tried to implement boilerplate for a full MERN (MongoDB Express React Node) example. This app actually do anything.
+Just trying to work with different web technologies in sort of a mock full stack application. Tried to implement boilerplate for a full MERN (MongoDB Express React Node) example. This app doesn't actually do anything.
